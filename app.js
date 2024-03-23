@@ -1,15 +1,3 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-import {
-  getDatabase,
-  ref,
-  onValue,
-  set,
-} from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBIxUDaOd3h6St-Lh1uvqnouO2aQ-b-5Tc",
   authDomain: "todo-list-e746b.firebaseapp.com",
@@ -20,279 +8,90 @@ const firebaseConfig = {
   appId: "1:68438468612:web:a38f230d890e5df1f22d51",
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getDatabase();
+const fb = firebase.initializeApp(firebaseConfig);
 
-var inputValue = document.getElementById("input");
-var todoDiv = document.getElementById("todo-div");
-
-if (!inputValue) {
-  alert("Please Enter Value First!");
-}
-
-
-var inputValue = document.getElementById("inp");
-
-window.addTodo = function () {
-  var obj = {
-    text: inputValue.value,
-  };
-
-  obj.id = push(ref(database, `task/${obj.id}`)).key;
-
-  var reference = ref(database, `task/${obj.id}`);
-
-  set(reference, obj);
-
-  console.log(reference);
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+console.log(fb.database);
 
 firebase
-    .database()
-    .ref("todos")
-    .on("child_added", (data) => {
+  .database()
+  .ref("todos")
+  .on("child_added", (data) => {
+    console.log(data.val());
 
-        console.log(data.val());
-        
+    list.innerHTML += `<li class="todoPara">${
+      data.val().value
+    } <button onclick="deleteitem(this)" class="deleteBtn">Delete</button> <button onclick="EditItem(this)" class="editBtn">Edit</button></li>`;
+  });
 
-        var liElement = document.createElement("li");
+function addTodo() {
+  var input = document.getElementById("input-div");
 
-        var liText = document.createTextNode(data.val().value);
+  console.log(input.value);
 
-        liElement.appendChild(liText);
+  var key = firebase.database().ref("todos").push().key;
 
-        console.log(liElement);
+  let obj = {
+    value: input.value,
+    key: key,
+  };
 
-        //               delete button
+  firebase.database().ref("todos").child(key).set(obj);
 
-        var delbtn = document.createElement("button");
-        var delbtnText = document.createTextNode("Delete");
-
-        delbtn.appendChild(delbtnText)
-
-        delbtn.setAttribute("id", data.val().key);
-
-        delbtn.setAttribute("onclick", "deleteitem(this)")
-        delbtn.setAttribute("class", "deleteitem")
-
-
-        var list = document.getElementById("list");
-
-        liElement.appendChild(delbtn);
-
-        list.appendChild(liElement);
-
-
-        //           Edit Button
-
-        var editbtn = document.createElement("button");
-        var editbtnText = document.createTextNode("Edit");
-
-        editbtn.appendChild(editbtnText);
-
-        editbtn.setAttribute("onclick", "EditItem(this)")
-        editbtn.setAttribute("class", "EditItem")
-
-
-        editbtn.setAttribute("id", data.val().key)
-
-        liElement.appendChild(editbtn);
-    });
-
-
-function addtodo() {
-    var input = document.getElementById("inputfield");
-
-    console.log(input.value);
-
-    var key = firebase.database().ref("todos").push().key;
-
-    let obj = {
-        value: input.value,
-        key: key
-    }
-
-    firebase.database().ref("todos").child(key).set(obj);
-
-    input.value = "";
+  input.value = "";
 }
 
-function deleteAll() {
-    var list = document.getElementById("list");
+function deleteAllTodo() {
+  var list = document.getElementById("list");
 
-    firebase.database().ref("todos").remove();
+  firebase.database().ref("todos").remove();
 
-    list.innerHTML = "";
+  list.innerHTML = "";
 }
+
+
+// At the last moment after changing some code and removing few lines this code is not working IDK Why sir
+
+
+// Tried GPT But Problem is not solving 
 
 function deleteitem(a) {
-    console.log(a.id)
+  // Check if the ID (a.id) is a valid non-empty string
+  if (!a.id || typeof a.id !== "string") {
+    console.error("Invalid ID:", a.id);
+    return;
+  }
 
-    firebase.database().ref("todos").child(a.id).remove();
-
-    a.parentNode.remove();
+  // Remove the todo item from Firebase
+  firebase
+    .database()
+    .ref("todos")
+    .child(a.id)
+    .remove()
+    .then(() => {
+      // Remove the corresponding HTML element (list item) from the DOM
+      a.parentNode.remove();
+    })
+    .catch((error) => {
+      console.error("Error removing item:", error);
+    });
 }
+function deleteitem(a) {
+  console.log(a.id);
 
+  firebase.database().ref("todos").child(a.id).remove();
+
+  a.parentNode.remove();
+}
 
 function EditItem(e) {
-    var userInput = prompt("Enter New updated value");
+  var userInput = prompt("Enter New updated value");
 
-    var editTodo = {
-        value: userInput,
-        key: e.id
-    }
+  var editTodo = {
+    value: userInput,
+    key: e.id,
+  };
 
-    firebase.database().ref("todos").child(e.id).set(editTodo);
-    
-    e.parentNode.firstChild.nodeValue = userInput;
+  firebase.database().ref("todos").child(e.id).set(editTodo);
+
+  e.parentNode.firstChild.nodeValue = userInput;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function addTodo() {
-//   if (!inputValue.value) {
-//     alert("Please Enter Value First!");
-//     return;
-//   }
-//   todoDiv.innerHTML += `<p class="todoPara">
-//       ${inputValue.value}
-//       <button onclick="deleteTodo(this)" class="deleteBtn">
-//         Delete
-//       </button>
-//       <button onclick="editTodo(this)" class="editBtn">
-//         {" "}
-//         Edit
-//       </button>
-//     </p>`;
-
-//   // Empty Input After Value
-//   inputValue.value = "";
-// }
-// // Adding Delete Btn
-// function deleteTodo(ele) {
-//   var eleTodo = ele.parentNode;
-//   eleTodo.remove();
-// }
-
-// // Adding Edit Btn
-// function editTodo(ele) {
-//   var para = ele.parentNode;
-//   var placeHolder = para.firstChild.nodeValue;
-//   console.log(placeHolder);
-//   var editValue = prompt("Edit Todo Value", placeHolder);
-
-//   para.firstChild.nodeValue = editValue;
-// }
-
-// // Delete All Todo Function.
-// function deleteAllTodo() {
-//   todoDiv.innerHTML = "";
-// }
-
-// // Firebase Starts
-
-// var input = document.getElementById("inp");
-
-// window.abc = function () {
-//   var obj = {
-//     text: input.value,
-//   };
-
-//   obj.id = push(ref(database, `task/${obj.id}`)).key;
-
-//   var reference = ref(database, `task/${obj.id}`);
-
-//   set(reference, obj);
-
-//   console.log(reference);
-// };
-
-// // get data from firebase database
-
-// function getData() {
-//   var reference = ref(database, "task/");
-//   onValue(reference, function (data) {
-//     var allData = data.val();
-//     // will be called every time the data at
-//     console.log(data.val());
-//   });
-// }
-
-// getData();

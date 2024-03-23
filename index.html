@@ -3,30 +3,34 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Todo Application</title>
+    <title>Todo Application With Database</title>
+    <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-database.js"></script>
     <link rel="stylesheet" href="./style.css" />
   </head>
 
   <body>
     <div class="main">
-      <div class="navbar">
-        <h1>Todo Application</h1>
-        <div class="login"><button onclick="login()">Login</button></div>
-      </div>
-      <div class="input-div">
-        <input type="text" id="input" placeholder="Enter Your Todo" />
+        <h1>Todo Application With DB</h1>
+    </div>
+
+    <div class="input-div">
+        <input type="text" id="input-div" placeholder="Enter Your Todo" />
         <button onclick="addTodo()" id="addTodo">Add Todo</button>
         <button onclick="deleteAllTodo()" id="deleteAll">Delete All</button>
       </div>
+  
 
-      <div id="todo-div">
-        <p class="todoPara">
-          Example Todo
-          <button onclick="deleteTodo(this)" class="deleteBtn">Delete</button>
-          <button onclick="editTodo(this)" class="editBtn">Edit</button>
-        </p>
+        <div id="todo-div">
+            <p class="todoPara">
+                Example Todo
+                <button onclick="deleteTodo(this)" class="deleteBtn">Delete</button>
+                <button onclick="editTodo(this)" class="editBtn">Edit</button>
+                <ul id="list"></ul>
+          </p>
+        </div>
       </div>
-    </div>
+
+    <script src="app.js"></script>
   </body>
-  <script src="./app.js"></script>
 </html>
