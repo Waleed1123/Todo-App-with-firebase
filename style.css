@@ -1,0 +1,126 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+.main {
+  padding: 25px auto;
+  text-align: center;
+}
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 15px 10px;
+  margin-bottom: 25px;
+}
+.navbar h1 {
+  font-size: 1.3em;
+  color: green;
+}
+.login button {
+  padding: 6px 7px;
+  font-size: 1em;
+  font-weight: bold;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  background-color: royalblue;
+  color: white;
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+.login button:hover {
+  background-color: black;
+  color: white;
+}
+.input-div {
+  margin: auto;
+  padding: 50px;
+  width: 60%;
+  border-radius: 10px;
+  background-color: seagreen;
+}
+.input-div input {
+  padding: 8px 5px;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  font-size: 1.1em;
+  font-weight: bold;
+  width: 400px;
+  color: teal;
+}
+
+.input-div button {
+  padding: 8px 15px;
+  background-color: white;
+  font-size: 1em;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.5s ease-in-out;
+}
+.input-div button:hover {
+  color: white;
+}
+#addTodo:hover {
+  background-color: royalblue;
+}
+#deleteAll:hover {
+  background-color: red;
+}
+.todo-div {
+  margin-top: 30px;
+  width: 100%;
+}
+.todoPara {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  background-color: seagreen;
+  margin: 20px auto;
+  font-size: 1.2em;
+  width: 500px;
+
+  border-radius: 10px;
+  font-weight: bold;
+}
+.deleteBtn {
+  border-radius: 5px;
+  border: none;
+  background-color: white;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 6px 7px;
+  font-size: 0.8em;
+  margin-left: 25px;
+  transition: all 0.5s ease-in-out;
+}
+.deleteBtn:hover {
+  color: white;
+  background-color: red;
+}
+.editBtn {
+  border-radius: 5px;
+  border: none;
+  background-color: white;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 6px 7px;
+  font-size: 0.8em;
+  margin-left: 5px;
+  transition: all 0.5s ease-in-out;
+}
+.editBtn:hover {
+  color: white;
+  background-color: royalblue;
+}
